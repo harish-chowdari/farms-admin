@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaCalendarAlt, FaListAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
-import navItems from '../utils/sidebarLinks'
+import navItems from '../../utils/sidebarLinks'
 
 const Sidebar = () => {
     const navigate = useNavigate()
