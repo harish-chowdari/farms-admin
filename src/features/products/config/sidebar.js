@@ -1,7 +1,7 @@
 import { BarChart3, Home, Package, Settings, ShoppingCart, Sprout, Users } from "lucide-react";
 
 const sidebarItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: Home, navigateTo: '/dashboard' },
+    { id: 'Inventory', label: 'Inventory', icon: Home, navigateTo: '/product-management' },
     { id: 'inventory', label: 'Inventory', icon: Package, navigateTo: '/inventory' },
     { id: 'orders', label: 'Order Management', icon: ShoppingCart, navigateTo: '/orders' },
     { id: 'users', label: 'User Management', icon: Users, navigateTo: '/users' },
