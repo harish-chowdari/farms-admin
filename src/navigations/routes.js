@@ -6,6 +6,9 @@ const ROUTES = {
 
     // USER
     HOME: '/',
+    PRODUCT_MANAGEMENT: '/product-management',
+    CUSTOMER_MANAGEMENT: '/customer-management',
+    INVENTORY_MANAGEMENT: '/inventory-management',
     DASHBOARD: '/dashboard'
 }
 

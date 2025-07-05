@@ -11,19 +11,24 @@ export default function PageLayout({ children, sidebarItems, sidebarHeading }) {
   };
 
   return (
-    <div className="min-h-screen bg-green-25">
+    <div className="bg-green-25 flex flex-col h-screen">
+        {/* Fixed Header */}
         <Header onToggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-        <Sidebar isOpen={isSidebarOpen} sidebarHeading={sidebarHeading} sidebarItems={sidebarItems} onClose={toggleSidebar} />
         
-        {/* Main Content - Right Side Outlet */}
-        <main className={`
-            pt-16 transition-all duration-300 ease-in-out min-h-screen
-            ${isSidebarOpen ? 'ml-64' : 'ml-16'}
-        `}>
-            <div className="p-6">
-            {children}
-            </div>
-        </main>
+        {/* Container for Sidebar and Main Content */}
+        <div className="flex flex-1 overflow-hidden">
+            <Sidebar isOpen={isSidebarOpen} sidebarHeading={sidebarHeading} sidebarItems={sidebarItems} onClose={toggleSidebar} />
+            
+            {/* Main Content - Scrollable Area */}
+            <main className={`
+                transition-all duration-300 bg-gradient-to-br from-gray-50 to-gray-100 ease-in-out flex-1 overflow-y-auto
+                ${isSidebarOpen ? 'ml-64' : 'ml-16'}
+            `}>
+                <div className="p-6">
+                    {children}
+                </div>
+            </main>
+        </div>
     </div>
   );
 }
