@@ -43,7 +43,7 @@ export default function Sidebar({ isOpen, sidebarItems = [], sidebarHeading = "D
                 </div>
                 
                 {/* Navigation - Conditionally scrollable */}
-                <nav className={`flex-1 px-2 py-4 space-y-2 ${isOpen ? 'overflow-y-auto' : 'overflow-visible'}`}>
+                <nav className={`flex-1 px-2 py-4 space-y-2 ${isOpen ? '' : ''}`}>
                     {items.map((item) => {
                         const Icon = item.icon;
                         return (
@@ -63,11 +63,11 @@ export default function Sidebar({ isOpen, sidebarItems = [], sidebarHeading = "D
                             `}
                             >
                             <Icon className="w-5 h-5 flex-shrink-0" />
-                            {isOpen && <span className="font-medium">{item.label}</span>}
+                            {isOpen && <span className="font-medium text-nowrap">{item.label}</span>}
                             
                             {/* Tooltip for collapsed state */}
                             {!isOpen && (
-                                <div className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
+                                <div className="absolute text-nowrap left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
                                 {item.label}
                                 </div>
                             )}
