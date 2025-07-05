@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Users, Package, BarChart3, Warehouse, Plus, Eye, Edit, TrendingUp, ShoppingCart, UserCheck, AlertTriangle, Sprout, Search, Bell, User } from 'lucide-react';
-import Header from '../../components/layout/Header';
+import { Users, Package, BarChart3, Warehouse, Plus, Eye, Edit, TrendingUp, ShoppingCart, UserCheck, AlertTriangle, Sprout, Search, Bell, User, ArrowRight, ExternalLink, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+import Header from '../../components/layout/Header';
 
 const AdminDashboard = () => {
 	const [activeCard, setActiveCard] = useState(null);
@@ -27,7 +26,7 @@ const AdminDashboard = () => {
 				{ label: 'Out of Stock', value: 5, icon: AlertTriangle }
 			],
 			actions: ['Add New Product', 'Manage Categories', 'Bulk Import'],
-            navigateTo: '/product-management'
+            navigateTo: '/product-management/add-product'
 		},
 		{
 			id: 'customers',
@@ -132,9 +131,8 @@ const AdminDashboard = () => {
 							const IconComponent = card.icon;
 							return (
 								<div
-
 									key={card.id}
-									className={`bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer ${
+									className={`bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer relative group ${
 										activeCard === card.id ? 'ring-2 ring-blue-500' : ''
 									}`}
 									onClick={() => navigate(card?.navigateTo)}
@@ -168,6 +166,17 @@ const AdminDashboard = () => {
 													</div>
 												);
 											})}
+										</div>
+									</div>
+
+									{/* Hover Overlay */}
+									<div onClick={() => navigate(card?.navigateTo)} className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+										<div className="text-center text-white">
+											<div className="bg-white/20 p-4 rounded-full mb-3 mx-auto w-16 h-16 flex items-center justify-center">
+												<ExternalLink className="w-8 h-8" />
+											</div>
+											<p className="text-lg font-semibold mb-1">Open {card.title}</p>
+											<p className="text-sm text-white/80">Click to navigate</p>
 										</div>
 									</div>
 								</div>

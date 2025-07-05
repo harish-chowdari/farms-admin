@@ -1,8 +1,10 @@
 import { Bell, Search, Sprout, User, Wifi, WifiOff } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
     const [isOnline, setIsOnline] = useState(navigator.onLine)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const handleOnline = () => setIsOnline(true)
@@ -25,7 +27,7 @@ export default function Header() {
                         <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
                             <Sprout className="w-5 h-5 text-white" />
                         </div>
-                        <div onClick={() => window.location.href = '/'} className='cursor-pointer'>
+                        <div onClick={() => navigate('/')} className='cursor-pointer'>
                             <h1 className="text-lg font-bold text-green-800">Sunotal Farms</h1>
                             <p className="text-xs text-green-600">Fresh</p>
                         </div>
