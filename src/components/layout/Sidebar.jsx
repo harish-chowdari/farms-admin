@@ -32,12 +32,12 @@ export default function Sidebar({ isOpen, sidebarItems = [], sidebarHeading = "D
                     )}
                     <button
                         onClick={onClose}
-                        className="p-2 rounded-lg hover:bg-green-200 transition-colors ml-auto"
+                        className="p-2 rounded-lg cursor-pointer hover:bg-green-200 transition-colors ml-auto"
                     >
                         {isOpen ? (
-                            <X className="w-5 cursor-pointer h-5 text-green-600" />
+                            <X className="w-5  h-5 text-green-600" />
                         ) : (
-                            <Menu className="w-5 h-5 cursor-pointer text-green-600" />
+                            <Menu className="w-5 h-5 text-green-600" />
                         )}
                     </button>
                 </div>

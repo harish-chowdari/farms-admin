@@ -11,19 +11,40 @@ import PricingSection from './components/PricingSection';
 import ProductDetailsSection from './components/ProductDetails';
 import FileUpload from '../../../../components/fields/FileUpload';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
+import { addProduct } from './services/api';
 
 export default function index() {
     const [uploadedImages, setUploadedImages] = useState([]);
 
-    const handleSubmit = (values) => {
-        console.log(values)
-    }
+    const handleSubmit = async (values) => {
+	const formData = new FormData()
+
+	// append all formik values
+	Object.entries(values).forEach(([key, val]) => {
+		if (key === 'images') {
+			// images should be File objects
+			val.forEach(file => formData.append('images', file))
+		} else {
+			formData.append(key, val)
+		}
+	})
+
+	try {
+		const res = await addProduct(formData)
+		console.log(res)
+	} catch (error) {
+		console.error(error)
+	}
+}
+
 
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: handleSubmit,
-        validationSchema: validationSchema
+        // validationSchema: validationSchema
     });
+
+
 
     return (
         <PageLayout pageHeading="Add Product" sidebarHeading={sidebarHeading} sidebarItems={sidebarItems}>

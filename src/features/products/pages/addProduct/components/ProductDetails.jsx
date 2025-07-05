@@ -24,7 +24,7 @@ const ProductDetails = ({ formik }) => {
                 <h2 className="text-xl font-semibold text-gray-800">Product Details</h2>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
                 <div>
                     <Select 
                         label="Freshness" 
@@ -36,30 +36,6 @@ const ProductDetails = ({ formik }) => {
                 
                 <div>
                     <Input label={'Expiry Date'} name="expiryDate" type="date" formik={formik} />
-                </div>
-                
-                <div>
-                    <Input 
-                        label="Initial Rating" 
-                        placeholder="0.0" 
-                        name="rating" 
-                        type="number"
-                        step="0.1"
-                        min="0"
-                        max="5"
-                        formik={formik} 
-                    />
-                </div>
-                
-                <div>
-                    <Input 
-                        label="Reviews Count" 
-                        placeholder="0" 
-                        name="reviewsCount" 
-                        type="number"
-                        min="0"
-                        formik={formik} 
-                    />
                 </div>
                 
                 <div className="md:col-span-2">
