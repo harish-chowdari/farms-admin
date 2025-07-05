@@ -19,8 +19,8 @@ export default function Input({
             : 'border-gray-300'
 
     return (
-        <div className="mb-4">
-            <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+        <div>
+            <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-[1px]">
                 {label}
             </label>
             <input
@@ -39,9 +39,9 @@ export default function Input({
                 autoComplete="off"
             />
             {isErrorRequired && (
-                <div className="min-h-[1.25rem] mt-1">
+                <div className="min-h-[1.25rem] mt-0">
                     {showError && (
-                        <p className="text-sm text-red-600">
+                        <p className="text-xs text-red-600">
                             {formik.errors[name]}
                         </p>
                     )}

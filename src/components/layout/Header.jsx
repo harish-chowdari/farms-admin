@@ -10,12 +10,12 @@ export default function Header() {
         const handleOnline = () => setIsOnline(true)
         const handleOffline = () => setIsOnline(false)
 
-        window.addEventListener('online', handleOnline)
-        window.addEventListener('offline', handleOffline)
+        // window.addEventListener('online', handleOnline)
+        // window.addEventListener('offline', handleOffline)  
 
         return () => {
-            window.removeEventListener('online', handleOnline)
-            window.removeEventListener('offline', handleOffline)
+            // window.removeEventListener('online', handleOnline)
+            // window.removeEventListener('offline', handleOffline) 
         }
     }, [])
 
@@ -29,7 +29,7 @@ export default function Header() {
                         </div>
                         <div onClick={() => navigate('/')} className='cursor-pointer'>
                             <h1 className="text-lg font-bold text-green-800">Sunotal Farms</h1>
-                            <p className="text-xs text-green-600">Fresh</p>
+                            <p className="text-xs text-green-600">Lead Tomorrow's Agriculture</p>
                         </div>
                     </div>
                 </div>

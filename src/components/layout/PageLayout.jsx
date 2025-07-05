@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
-export default function PageLayout({ children, sidebarItems, sidebarHeading }) {
+export default function PageLayout({ children, pageHeading, sidebarItems, sidebarHeading }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
@@ -16,12 +16,12 @@ export default function PageLayout({ children, sidebarItems, sidebarHeading }) {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    // window.addEventListener('online', handleOnline);
+    // window.addEventListener('offline', handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+    //   window.removeEventListener('online', handleOnline);
+    //   window.removeEventListener('offline', handleOffline);
     };
   }, []);
 
@@ -84,7 +84,8 @@ export default function PageLayout({ children, sidebarItems, sidebarHeading }) {
                 transition-all duration-300 bg-gradient-to-br from-gray-50 to-gray-100 ease-in-out flex-1 overflow-y-auto
                 ${isSidebarOpen ? 'ml-64' : 'ml-16'}
             `}>
-                <div className="p-6">
+                <div className="p-3 flex flex-col gap-2">
+                    <h1 className='text-xl'>{pageHeading}</h1>
                     {children}
                 </div>
             </main>
