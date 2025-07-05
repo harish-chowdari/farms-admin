@@ -6,14 +6,14 @@ const FileUpload = ({ formik, uploadedImages, setUploadedImages }) => {
         const files = Array.from(e.target.files);
         const newImages = files.map(file => URL.createObjectURL(file));
         setUploadedImages(prev => [...prev, ...newImages]);
-        formik.setFieldValue('images', [...formik.values.images, ...files]);
+        formik.setFieldValue('productImage', [...formik.values.images, ...files]);
     };
 
     const removeImage = (index) => {
         const newImages = uploadedImages.filter((_, i) => i !== index);
         setUploadedImages(newImages);
         const newFiles = formik.values.images.filter((_, i) => i !== index);
-        formik.setFieldValue('images', newFiles);
+        formik.setFieldValue('productImage', newFiles);
     };
 
     return (

@@ -17,25 +17,30 @@ export default function index() {
     const [uploadedImages, setUploadedImages] = useState([]);
 
     const handleSubmit = async (values) => {
-	const formData = new FormData()
+        console.log('Submitting values:', values)
 
-	// append all formik values
-	Object.entries(values).forEach(([key, val]) => {
-		if (key === 'images') {
-			// images should be File objects
-			val.forEach(file => formData.append('images', file))
-		} else {
-			formData.append(key, val)
-		}
-	})
+        const formData = new FormData()
 
-	try {
-		const res = await addProduct(formData)
-		console.log(res)
-	} catch (error) {
-		console.error(error)
-	}
-}
+        Object.entries(values).forEach(([key, val]) => {
+            if (Array.isArray(val)) {
+            // this will only run for your images array
+            val.forEach((file) => {
+                formData.append(key, file)
+            })
+            } else if (val !== undefined && val !== null) {
+            // append all other fields (strings, numbers, booleans)
+            formData.append(key, val)
+            }
+        })
+
+        try {
+            const res = await addProduct(formData)
+            console.log('API response:', res)
+        } catch (error) {
+            console.error('API error:', error)
+        }
+    }
+
 
 
     const formik = useFormik({

@@ -1,6 +1,6 @@
 const initialValues = {
 	productName: '',
-	images: [], // array of image URLs
+	productImage: '', // array of image URLs
 	weight: '',
 	weightUnit: '', // must be one of ['g', 'kg', 'ml', 'l', 'pcs']
 	price: '',
@@ -10,8 +10,6 @@ const initialValues = {
 	subCategory: '',
 	quantity: '',
 	isAvailable: true,
-	rating: 0,
-	reviewsCount: 0,
 	freshness: 'Fresh', // default
 	expiryDate: '',
 	origin: '',
