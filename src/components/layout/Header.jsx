@@ -27,15 +27,15 @@ export default function Header() {
                         </div>
                         <div onClick={() => window.location.href = '/'} className='cursor-pointer'>
                             <h1 className="text-lg font-bold text-green-800">Sunotal Farms</h1>
-                            <p className="text-xs text-green-600">Admin Dashboard</p>
+                            <p className="text-xs text-green-600">Fresh</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center md:space-x-4 space-x-2">
                     {/* Network Status Indicator */}
-                    <div className="flex items-center space-x-2">
-                        <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                    <div className="flex items-center md:space-x-2 space-x-1">
+                        <div className={`flex items-center md:space-x-1 md:px-2 md:py-1 p-1 rounded-full text-xs font-medium transition-all duration-300 ${
                             isOnline 
                                 ? 'bg-green-100 text-green-700 border border-green-200' 
                                 : 'bg-red-100 text-red-700 border border-red-200'
@@ -54,7 +54,7 @@ export default function Header() {
                         </div>
                         <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
                             isOnline 
-                                ? 'bg-green-500 shadow-lg shadow-green-500/50' 
+                                ? 'bg-green-500 animate-pulse shadow-lg shadow-green-500/50' 
                                 : 'bg-red-500 shadow-lg shadow-red-500/50 animate-pulse'
                         }`}></div>
                     </div>
@@ -68,12 +68,12 @@ export default function Header() {
                         />
                     </div> */}
                 
-                    <button className="relative p-2 rounded-lg hover:bg-green-50 transition-colors">
+                    <button className="relative p-2 rounded-lg cursor-pointer hover:bg-green-50 transition-colors">
                         <Bell className="w-5 h-5 text-green-600" />
                         <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
                     </button>
                     
-                    <button className="flex items-center space-x-2 p-2 rounded-lg hover:bg-green-50 transition-colors">
+                    <button className="flex items-center cursor-pointer md:space-x-2 md:p-2 p-2 rounded-lg hover:bg-green-50 transition-colors">
                         <User className="w-5 h-5 text-green-600" />
                         <span className="text-sm font-medium text-green-800 hidden md:block">Admin</span>
                     </button>
