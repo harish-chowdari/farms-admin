@@ -1,9 +1,24 @@
-import { Bell, Search, Sprout, User } from 'lucide-react'
-import React from 'react'
+import { Bell, Search, Sprout, User, Wifi, WifiOff } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
 
 export default function Header() {
+    const [isOnline, setIsOnline] = useState(navigator.onLine)
+
+    useEffect(() => {
+        const handleOnline = () => setIsOnline(true)
+        const handleOffline = () => setIsOnline(false)
+
+        window.addEventListener('online', handleOnline)
+        window.addEventListener('offline', handleOffline)
+
+        return () => {
+            window.removeEventListener('online', handleOnline)
+            window.removeEventListener('offline', handleOffline)
+        }
+    }, [])
+
     return (
-  <header className="bg-white shadow-sm border-b border-gray-200 z-50">
+        <header className="bg-white shadow-sm border-b border-gray-200 z-50">
             <div className="flex items-center justify-between px-4 py-3">
                 <div className="flex items-center space-x-4">
                     <div className="flex items-center space-x-2">
@@ -18,14 +33,40 @@ export default function Header() {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                    <div className="relative hidden md:block">
+                    {/* Network Status Indicator */}
+                    <div className="flex items-center space-x-2">
+                        <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                            isOnline 
+                                ? 'bg-green-100 text-green-700 border border-green-200' 
+                                : 'bg-red-100 text-red-700 border border-red-200'
+                        }`}>
+                            {isOnline ? (
+                                <>
+                                    <Wifi className="w-3 h-3" />
+                                    <span className="hidden sm:inline">Online</span>
+                                </>
+                            ) : (
+                                <>
+                                    <WifiOff className="w-3 h-3" />
+                                    <span className="hidden sm:inline">Offline</span>
+                                </>
+                            )}
+                        </div>
+                        <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                            isOnline 
+                                ? 'bg-green-500 shadow-lg shadow-green-500/50' 
+                                : 'bg-red-500 shadow-lg shadow-red-500/50 animate-pulse'
+                        }`}></div>
+                    </div>
+
+                    {/* <div className="relative hidden md:block">
                         <Search className="w-4 h-4 text-green-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                         <input
                             type="text"
                             placeholder="Search..."
                             className="pl-10 pr-4 py-2 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         />
-                    </div>
+                    </div> */}
                 
                     <button className="relative p-2 rounded-lg hover:bg-green-50 transition-colors">
                         <Bell className="w-5 h-5 text-green-600" />
