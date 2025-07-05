@@ -1,11 +1,12 @@
 const ROUTES = {
     // AUTH
-    LOGIN: '/',
+    LOGIN: '/login',
     SIGNUP: '/signup',
     PASSWORD_RESET: '/password-reset',
 
     // USER
-    HOME: '/home/:userId',
+    HOME: '/',
+    DASHBOARD: '/dashboard'
 }
 
 export default ROUTES

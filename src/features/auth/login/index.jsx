@@ -41,7 +41,7 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex">
-            <PrimaryLoader isLoading={true} />
+            <PrimaryLoader isLoading={isLoading} />
             <div className="hidden md:flex md:w-1/2">
                 {/* <img
                     src="https://img.freepik.com/free-photo/doctor-with-stethoscope-hands-hospital-background_1423-1.jpg?semt=ais_hybrid"

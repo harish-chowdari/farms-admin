@@ -1,49 +1,90 @@
-import React from 'react'
-import { FaCalendarAlt, FaListAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
-import { useNavigate, useParams, useLocation } from 'react-router-dom'
-import navItems from '../../utils/sidebarLinks'
+import React, { useState } from "react";
+import { BarChart3, Home, Menu, Package, Settings, ShoppingCart, Sprout, Users, X } from "lucide-react";
 
-const Sidebar = () => {
-    const navigate = useNavigate()
-    const location = useLocation()
+export default function Sidebar({ isOpen, sidebarItems = [], onClose }) {
+   const [activeItem, setActiveItem] = useState('dashboard');
 
-    const handleLogout = () => {
-      localStorage.clear();
-      navigate("/");
-    }
+    const defaultSidebarItems = [
+        { id: 'dashboard', label: 'Dashboard', icon: Home, href: '/dashboard' },
+        { id: 'products', label: 'Products', icon: Package, href: '/products' },
+        { id: 'orders', label: 'Orders', icon: ShoppingCart, href: '/orders' },
+        { id: 'customers', label: 'Customers', icon: Users, href: '/customers' },
+        { id: 'farmers', label: 'Farmers', icon: Sprout, href: '/farmers' },
+        { id: 'analytics', label: 'Analytics', icon: BarChart3, href: '/analytics' },
+        { id: 'settings', label: 'Settings', icon: Settings, href: '/settings' },
+    ];
+
+    const items = sidebarItems.length > 0 ? sidebarItems : defaultSidebarItems;
 
     return (
-        <aside className="w-[40vh] flex pt-2 flex-col justify-between h-[91.5vh] mt-[8.5vh] bg-white shadow-lg">
-            <nav>
-              <ul>
-                {navItems?.map((item, index) => {
-                  const isActive = location.pathname === item.path
-                  return (
-                    <li
-                      key={index}
-                      onClick={() => navigate(item.path)}
-                      className={`mb-2 flex items-center cursor-pointer p-3 transition ${
-                        isActive
-                          ? 'bg-green-200 text-green-700 font-semibold border-l-4 border-green-700'
-                          : 'text-gray-500 font-semibold hover:text-green-600 hover:bg-green-100 border-l-4  border-transparent'
-                      }`}
-                    >
-                      <span className={`mr-2 transition ${isActive ? 'text-green-700' : ' hover:text-green-600'}`}>
-                        <item.icon size={20} />
-                      </span>
-                      <span>{item.label}</span>
-                    </li>
-                  )
-                })}
-              </ul>
-            </nav>
-            
-            <button onClick={handleLogout} className="flex pl-4 py-2 hover:bg-green-100 hover:border-l-4 border-l-green-700 cursor-pointer items-center">
-              <FaSignOutAlt className="mr-2" />
-              <span>Logout</span>
-            </button>
-        </aside>
-    )
+        <>
+            {/* Sidebar */}
+            <aside className={`
+                fixed left-0 top-0 h-full bg-gradient-to-b from-green-50 to-green-100 border-r border-green-200 z-40
+                transition-all duration-300 ease-in-out pt-16
+                ${isOpen ? 'w-64' : 'w-16'}
+            `}>
+                <div className="flex flex-col h-full">    
+                    <div className="flex justify-center p-4">
+                        <button
+                            onClick={onClose}
+                            className="p-2 rounded-lg hover:bg-green-200 transition-colors"
+                        >
+                        {isOpen ? (
+                            <X className="w-5 h-5 text-green-600" />
+                        ) : (
+                            <Menu className="w-5 h-5 text-green-600" />
+                        )}
+                        </button>
+                    </div>
+                
+                    {/* Navigation */}
+                    <nav className="flex-1 px-2 pb-6 space-y-2">
+                        {items.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                                <button
+                                key={item.id}
+                                onClick={() => setActiveItem(item.id)}
+                                className={`
+                                    w-full flex items-center rounded-lg transition-all duration-200 relative group
+                                    ${isOpen ? 'space-x-3 px-4 py-3' : 'justify-center p-3'}
+                                    ${activeItem === item.id 
+                                    ? 'bg-green-500 text-white shadow-lg' 
+                                    : 'text-green-700 hover:bg-green-200 hover:text-green-800'
+                                    }
+                                `}
+                                >
+                                <Icon className="w-5 h-5 flex-shrink-0" />
+                                {isOpen && <span className="font-medium">{item.label}</span>}
+                                
+                                {/* Tooltip for collapsed state */}
+                                {!isOpen && (
+                                    <div className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
+                                    {item.label}
+                                    </div>
+                                )}
+                                </button>
+                            );
+                        })}
+                    </nav>
+                
+                    {/* Footer */}
+                    {isOpen && (
+                        <div className="p-4 border-t border-green-200">
+                            <div className="bg-green-600 text-white p-3 rounded-lg">
+                                <div className="flex items-center space-x-2">
+                                    <Sprout className="w-5 h-5" />
+                                    <div>
+                                        <p className="text-sm font-medium">Fresh & Natural</p>
+                                        <p className="text-xs opacity-90">Farm to Table</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </aside>
+        </>
+    );
 }
-
-export default Sidebar
