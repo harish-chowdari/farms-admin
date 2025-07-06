@@ -7,7 +7,8 @@ export default function TextArea({
 	isErrorRequired = true, 
 	tailwindClasses = 'p-lg',
 	rows = 4, 
-	formik 
+	formik,
+    isFieldRequired = false
 }) {
 	const [isFocused, setIsFocused] = useState(false)
 
@@ -21,7 +22,7 @@ export default function TextArea({
 	return (
 		<div>
 			<label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-[1px]">
-				{label}
+				{label} {isFieldRequired && <span className='text-red-600'>*</span>}
 			</label>
 			<textarea
 				id={name}

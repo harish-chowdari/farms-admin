@@ -4,10 +4,11 @@ export default function Select({
 	label, 
 	name, 
 	isErrorRequired = true,
+    isFieldRequired = false,
 	tailwindClasses = 'p-lg',
 	options = [], 
 	placeholder = 'Select an option', 
-	formik 
+	formik,
 }) {
 	const [isFocused, setIsFocused] = useState(false)
 
@@ -21,7 +22,7 @@ export default function Select({
 	return (
 		<div>
 			<label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-[1px]">
-				{label}
+				{label}{isFieldRequired && <span className='text-red-600'>*</span>}
 			</label>
 			<select
 				id={name}

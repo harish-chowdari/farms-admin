@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
-import { Package, ShoppingCart, Sprout } from 'lucide-react';
-
-import PageLayout from '../../../../components/layout/PageLayout';
-import { sidebarHeading, sidebarItems } from '../../config/sidebar';
 import { useFormik } from 'formik';
-import initialValues from './utils/initialValues';
-import { validationSchema } from './utils/validationSchema';
-import BasicInfoSection from './components/BasicInfoSection';
-import PricingSection from './components/PricingSection';
-import ProductDetailsSection from './components/ProductDetails';
+
+// components
+import PageLayout from '../../../../components/layout/PageLayout';
+import ProductDetails from '../../components/ProductDetails';
+import ExtraInfo from '../../components/ExtraInfo';
+import PricingSection from '../../components/PricingSection';
 import FileUpload from '../../../../components/fields/FileUpload';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
+// utils
+import { sidebarHeading, sidebarItems } from '../../config/sidebar';
+import initialValues from './utils/initialValues';
+import { validationSchema } from './utils/validationSchema';
+// services
 import { addProduct } from './services/api';
+
 
 export default function index() {
     const [uploadedImages, setUploadedImages] = useState([]);
@@ -41,26 +44,22 @@ export default function index() {
         }
     }
 
-
-
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: handleSubmit,
-        // validationSchema: validationSchema
+        validationSchema: validationSchema
     });
-
-
 
     return (
         <PageLayout pageHeading="Add Product" sidebarHeading={sidebarHeading} sidebarItems={sidebarItems}>
             <div className="p-3 bg-gray-50 min-h-screen">
                 <form onSubmit={formik.handleSubmit} className="mx-auto space-y-8">
                     
-                    <BasicInfoSection formik={formik} />
+                    <ProductDetails formik={formik} />
+                    
+                    <ExtraInfo formik={formik} />
                     
                     <PricingSection formik={formik} />
-                    
-                    <ProductDetailsSection formik={formik} />
 
                     <FileUpload 
                         formik={formik} 

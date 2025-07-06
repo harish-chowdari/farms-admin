@@ -6,6 +6,7 @@ export default function Input({
     type = 'text', 
     placeholder, 
     isErrorRequired = true,
+    isFieldRequired = false,
     tailwindClasses = 'p-lg', 
     formik 
 }) {
@@ -21,7 +22,7 @@ export default function Input({
     return (
         <div>
             <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-[1px]">
-                {label}
+                {label}{isFieldRequired && <span className='text-red-600'>*</span>}
             </label>
             <input
                 id={name}

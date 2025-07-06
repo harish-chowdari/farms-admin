@@ -10,6 +10,7 @@ const ROUTES = {
     // PRODUCT
     ADD_PRODUCT: '/product-management/add-product',
     VIEW_PRODUCTS: '/product-management/view-products',
+    EDIT_PRODUCT: '/product-management/edit-product/:id',
 
     // CUSTOMER
     CUSTOMER_PROFILE: '/customer-management/customer-profile',

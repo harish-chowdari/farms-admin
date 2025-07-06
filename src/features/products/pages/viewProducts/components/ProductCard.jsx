@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Filter, Plus, Edit, Trash2, Eye, Package, TrendingUp, AlertCircle, Calendar } from 'lucide-react';
 
 export default function ProductCard({ product }) {
+
+    const navigate = useNavigate();
+
 	const getStockStatus = (quantity) => {
 		if (quantity > 20) return { status: 'High', color: 'text-green-600 bg-green-50' };
 		if (quantity > 10) return { status: 'Medium', color: 'text-yellow-600 bg-yellow-50' };
@@ -45,7 +49,7 @@ export default function ProductCard({ product }) {
 					<span className={`px-2 py-1 rounded-full text-xs font-medium ${stockStatus.color}`}>
 						{stockStatus.status}
 					</span>
-					{daysUntilExpiry <= 3 && (
+					{ product?.expiryDate && product?.expiryDate !== null && daysUntilExpiry <= 3 && (
 						<span className="bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
 							<AlertCircle size={12} />
 							{daysUntilExpiry}d
@@ -71,15 +75,15 @@ export default function ProductCard({ product }) {
 				<p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
 
 				<div className="flex flex-wrap gap-2 mb-4">
-					<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
+					{ product?.category && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
 						{product.category}
-					</span>
-					<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700">
-						{product.freshness}
-					</span>
-					<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
-						{product.brand}
-					</span>
+					</span>}
+					{ product?.freshness && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700">
+						{product?.freshness}
+					</span>}
+					{ product?.brand && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
+						{product?.brand}
+					</span>}
 				</div>
 
 				<div className="flex items-center justify-between mb-4">
@@ -87,22 +91,22 @@ export default function ProductCard({ product }) {
 						<Package size={16} />
 						<span>Qty: {product.quantity}</span>
 					</div>
-					<div className="flex items-center gap-2 text-sm text-gray-600">
+					{ product?.expiryDate && product?.expiryDate !== null && <div className="flex items-center gap-2 text-sm text-gray-600">
 						<Calendar size={16} />
-						<span>Exp: {formatDate(product.expiryDate)}</span>
-					</div>
+						<span>Exp: {formatDate(product?.expiryDate)}</span>
+					</div>}
 				</div>
 
 				<div className="flex gap-2">
-					<button className="flex-1 bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2">
+					<button className="flex-1 cursor-pointer bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2">
 						<Eye size={16} />
 						View
 					</button>
-					<button className="flex-1 bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-100 transition-colors flex items-center justify-center gap-2">
+					<button onClick={() => navigate(`/product-management/edit-product/${product._id}`)} className="flex-1 cursor-pointer bg-green-50 text-green-600 px-4 py-2 rounded-lg hover:bg-green-100 transition-colors flex items-center justify-center gap-2">
 						<Edit size={16} />
 						Edit
 					</button>
-					<button className="bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors flex items-center justify-center">
+					<button className="bg-red-50 cursor-pointer text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors flex items-center justify-center">
 						<Trash2 size={16} />
 					</button>
 				</div>

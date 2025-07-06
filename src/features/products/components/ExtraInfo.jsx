@@ -1,9 +1,9 @@
 import React from 'react';
 import { Sprout } from 'lucide-react';
-import Input from '../../../../../components/fields/Input';
-import Select from '../../../../../components/fields/Select';
+import Input from '../../../components/fields/Input';
+import Select from '../../../components/fields/Select';
 
-const ProductDetails = ({ formik }) => {
+const ExtraInfo = ({ formik }) => {
     const freshnessOptions = [
         { value: 'Fresh', label: 'Fresh' },
         { value: 'Frozen', label: 'Frozen' },
@@ -61,4 +61,4 @@ const ProductDetails = ({ formik }) => {
     );
 };
 
-export default ProductDetails;
+export default ExtraInfo;

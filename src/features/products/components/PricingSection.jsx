@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
-import Input from '../../../../../components/fields/Input';
-import Select from '../../../../../components/fields/Select';
+import Input from '../../../components/fields/Input';
+import Select from '../../../components/fields/Select';
 
 const PricingSection = ({ formik }) => {
     const weightUnits = [
@@ -32,6 +32,7 @@ const PricingSection = ({ formik }) => {
                         step="0.01"
                         min="0"
                         formik={formik} 
+                        isFieldRequired={true}
                     />
                 </div>
                 
@@ -55,6 +56,7 @@ const PricingSection = ({ formik }) => {
                         type="number"
                         min="0"
                         formik={formik} 
+                        isFieldRequired={true}
                     />
                 </div>
                 
@@ -66,6 +68,7 @@ const PricingSection = ({ formik }) => {
                         type="number"
                         min="0"
                         formik={formik} 
+                        isFieldRequired={true}
                     />
                 </div>
                 
@@ -75,6 +78,7 @@ const PricingSection = ({ formik }) => {
                         name="weightUnit" 
                         options={weightUnits}
                         formik={formik} 
+                        isFieldRequired={true}
                     />
                 </div>
             </div>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Package } from 'lucide-react';
-import Input from '../../../../../components/fields/Input';
-import Select from '../../../../../components/fields/Select';
-import TextArea from '../../../../../components/fields/TextArea';
+import Input from '../../../components/fields/Input';
+import Select from '../../../components/fields/Select';
+import TextArea from '../../../components/fields/TextArea';
 
-const BasicInfoSection = ({ formik }) => {
+const ProductDetails = ({ formik }) => {
     const categories = [
         { value: '', label: 'Select category' },
         { value: 'Vegetables', label: 'Vegetables' },
@@ -19,7 +19,7 @@ const BasicInfoSection = ({ formik }) => {
                 <div className="p-2 bg-blue-100 rounded-lg">
                     <Package className="w-5 h-5 text-blue-600" />
                 </div>
-                <h2 className="text-xl font-semibold text-gray-800">Basic Information</h2>
+                <h2 className="text-xl font-semibold text-gray-800">Product Details Section</h2>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
@@ -29,6 +29,7 @@ const BasicInfoSection = ({ formik }) => {
                         placeholder="Enter product name" 
                         name="productName" 
                         formik={formik} 
+                        isFieldRequired={true}
                     />
                 </div>
                 
@@ -48,6 +49,7 @@ const BasicInfoSection = ({ formik }) => {
                         name="category" 
                         options={categories}
                         formik={formik} 
+                        isFieldRequired={true}
                     />
                 </div>
 
@@ -82,4 +84,4 @@ const BasicInfoSection = ({ formik }) => {
     );
 };
 
-export default BasicInfoSection;
+export default ProductDetails;
