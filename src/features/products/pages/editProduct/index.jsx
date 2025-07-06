@@ -61,10 +61,13 @@ export default function index() {
             }
         })
         try {
+            setIsLoading(true)
             const res = await updateProduct(productId, formData)
             console.log('API response:', res)
         } catch (error) {
             console.error('API error:', error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
