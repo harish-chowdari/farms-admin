@@ -1,8 +1,9 @@
-import { BarChart3, Home, Package, Settings, ShoppingCart, Sprout, Users } from "lucide-react";
+import { Home, Package, ShoppingCart } from "lucide-react";
+import ROUTES from "../../../navigations/routes";
 
 const sidebarItems = [
-    { id: 'add product', label: 'Add Product', icon: Home, navigateTo: '/product-management/add-product' },
-    { id: 'view products', label: 'View Products', icon: Package, navigateTo: '/product-management/view-products' },
+    { id: 'add product', label: 'Add Product', icon: Home, navigateTo: ROUTES.ADD_PRODUCT },
+    { id: 'view products', label: 'View Products', icon: Package, navigateTo: ROUTES.VIEW_PRODUCTS },
     { id: 'orders', label: 'Order Management', icon: ShoppingCart, navigateTo: '/product-management/orders' },
 ];
 

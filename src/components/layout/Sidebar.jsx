@@ -1,19 +1,38 @@
-import React, { useState } from "react";
-import { BarChart3, Home, Menu, Package, Settings, ShoppingCart, Sprout, Users, X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Home, Menu, Package, ShoppingCart, Sprout, X } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Sidebar({ isOpen, sidebarItems = [], sidebarHeading = "Dashboard", onClose }) {
-   const [activeItem, setActiveItem] = useState('dashboard');
-   const navigate = useNavigate();
+   
+    const [activeItem, setActiveItem] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const defaultSidebarItems = [
-        { id: 'dashboard', label: 'Dashboard', icon: Home, navigateTo: '/dashboard' },
-        { id: 'products', label: 'Products', icon: Package, navigateTo: '/products' },
-        { id: 'orders', label: 'Orders', icon: ShoppingCart, navigateTo: '/orders' },
-        { id: 'customers', label: 'Customers', icon: Users, navigateTo: '/customers' },
+        { id: 'add product', label: 'Add Product', icon: Home, navigateTo: '/product-management/add-product' },
+        { id: 'view products', label: 'View Products', icon: Package, navigateTo: '/product-management/view-products' },
+        { id: 'orders', label: 'Order Management', icon: ShoppingCart, navigateTo: '/product-management/orders' },
     ];
 
     const items = sidebarItems.length > 0 ? sidebarItems : defaultSidebarItems;
+
+    // Set active item based on current route
+    useEffect(() => {
+        const currentItem = items.find(item => item.navigateTo === location.pathname);
+        if (currentItem) {
+            setActiveItem(currentItem.id);
+        }
+    }, [location.pathname, items]);
+
+    const handleItemClick = (item) => {
+        // Set active item immediately
+        setActiveItem(item.id);
+        
+        // Then navigate
+        if (item.navigateTo) {
+            navigate(item.navigateTo);
+        }
+    };
 
     return (
         <>
@@ -42,17 +61,14 @@ export default function Sidebar({ isOpen, sidebarItems = [], sidebarHeading = "D
                     </button>
                 </div>
                 
-                {/* Navigation - Conditionally scrollable */}
-                <nav className={`flex-1 px-2 py-4 space-y-2 ${isOpen ? '' : ''}`}>
+                {/* Navigation */}
+                <nav className={`flex-1 px-2 py-4 space-y-2`}>
                     {items.map((item) => {
                         const Icon = item.icon;
                         return (
                             <button
                             key={item.id}
-                            onClick={() => {
-                                setActiveItem(item.id)
-                                navigate(item?.navigateTo);
-                            }}
+                            onClick={() => handleItemClick(item)}
                             className={`
                                 w-full flex items-center rounded-lg transition-all duration-200 relative group
                                 ${isOpen ? 'space-x-3 px-4 py-3' : 'justify-center p-3'}
