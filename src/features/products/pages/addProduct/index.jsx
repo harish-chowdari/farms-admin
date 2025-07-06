@@ -14,33 +14,35 @@ import initialValues from './utils/initialValues';
 import { validationSchema } from './utils/validationSchema';
 // services
 import { addProduct } from './services/api';
+import PrimaryLoader from '../../../../components/loaders/PrimaryLoader';
 
 
 export default function index() {
     const [uploadedImages, setUploadedImages] = useState([]);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const handleSubmit = async (values) => {
-        console.log('Submitting values:', values)
 
         const formData = new FormData()
 
         Object.entries(values).forEach(([key, val]) => {
             if (Array.isArray(val)) {
-            // this will only run for your images array
-            val.forEach((file) => {
-                formData.append(key, file)
-            })
+                val.forEach((file) => {
+                    formData.append(key, file)
+                })
             } else if (val !== undefined && val !== null) {
-            // append all other fields (strings, numbers, booleans)
-            formData.append(key, val)
+                formData.append(key, val)
             }
         })
-
         try {
+            setIsLoading(true)
             const res = await addProduct(formData)
             console.log('API response:', res)
         } catch (error) {
             console.error('API error:', error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -52,6 +54,7 @@ export default function index() {
 
     return (
         <PageLayout pageHeading="Add Product" sidebarHeading={sidebarHeading} sidebarItems={sidebarItems}>
+            <PrimaryLoader isLoading={isLoading} />
             <div className="p-3 bg-gray-50 min-h-screen">
                 <form onSubmit={formik.handleSubmit} className="mx-auto space-y-8">
                     
