@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Users, Package, BarChart3, Warehouse, Plus, Eye, Edit, TrendingUp, ShoppingCart, UserCheck, AlertTriangle, Sprout, Search, Bell, User, ArrowRight, ExternalLink, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/layout/Header';
+import ROUTES from '../../navigations/routes';
 
 const AdminDashboard = () => {
 	const [activeCard, setActiveCard] = useState(null);
@@ -26,7 +27,7 @@ const AdminDashboard = () => {
 				{ label: 'Out of Stock', value: 5, icon: AlertTriangle }
 			],
 			actions: ['Add New Product', 'Manage Categories', 'Bulk Import'],
-            navigateTo: '/product-management/add-product'
+            navigateTo: ROUTES.ADD_PRODUCT
 		},
 		{
 			id: 'customers',
@@ -39,7 +40,7 @@ const AdminDashboard = () => {
 				{ label: 'Active Orders', value: 23, icon: ShoppingCart }
 			],
 			actions: ['View All Customers', 'Customer Analytics', 'Support Tickets'],
-            navigateTo: '/customer-management'
+            navigateTo: ROUTES.CUSTOMER_PROFILE
 		},
 		{
 			id: 'inventory',
@@ -52,7 +53,7 @@ const AdminDashboard = () => {
 				{ label: 'Reorder Required', value: 8, icon: Package }
 			],
 			actions: ['Update Stock', 'Set Alerts', 'Supplier Management'],
-            navigateTo: '/inventory-management'
+            navigateTo: ROUTES.INVENTORY_MANAGEMENT
 		},
 		{
 			id: 'dashboard',
@@ -65,7 +66,7 @@ const AdminDashboard = () => {
 				{ label: 'Growth Rate', value: '+12%', icon: TrendingUp }
 			],
 			actions: ['Sales Report', 'Customer Insights', 'Export Data'],
-            navigateTo: '/dashboard'    
+            navigateTo: ROUTES.DASHBOARD   
 		}
 	];
 

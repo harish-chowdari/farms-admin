@@ -8,11 +8,11 @@ const ROUTES = {
     HOME: '/',
 
     // PRODUCT
-    ADD_MANAGEMENT: '/product-management/add-product',
+    ADD_PRODUCT: '/product-management/add-product',
     VIEW_PRODUCTS: '/product-management/view-products',
 
     // CUSTOMER
-    CUSTOMER_MANAGEMENT: '/customer-management',
+    CUSTOMER_PROFILE: '/customer-management/customer-profile',
 
     // INVENTORY
     INVENTORY_MANAGEMENT: '/inventory-management',

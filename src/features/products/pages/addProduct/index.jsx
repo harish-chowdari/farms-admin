@@ -53,8 +53,8 @@ export default function index() {
 
     return (
         <PageLayout pageHeading="Add Product" sidebarHeading={sidebarHeading} sidebarItems={sidebarItems}>
-            <div className="p-6 bg-gray-50 min-h-screen">
-                <form onSubmit={formik.handleSubmit} className="max-w-6xl mx-auto space-y-8">
+            <div className="p-3 bg-gray-50 min-h-screen">
+                <form onSubmit={formik.handleSubmit} className="mx-auto space-y-8">
                     
                     <BasicInfoSection formik={formik} />
                     

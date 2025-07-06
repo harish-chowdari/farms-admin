@@ -17,11 +17,11 @@ const Dashboard = lazy(() => import("../features/dashboard/pages/analytics"));
 
 export const restrictedRoutes = [
     { path: ROUTES.HOME, element: <Home /> },
-    { path: ROUTES.ADD_MANAGEMENT, element: <AddProduct /> },
+    { path: ROUTES.ADD_PRODUCT, element: <AddProduct /> },
     { path: ROUTES.VIEW_PRODUCTS, element: <ViewProducts /> },
 
     // customer
-    { path: ROUTES.CUSTOMER_MANAGEMENT, element: <CustomerManagement /> },
+    { path: ROUTES.CUSTOMER_PROFILE, element: <CustomerManagement /> },
 
     // inventory
     { path: ROUTES.INVENTORY_MANAGEMENT, element: <InventoryManagement /> },
