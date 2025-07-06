@@ -21,7 +21,7 @@ export default function Input({
 
     return (
         <div>
-            <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-[1px]">
+            <label htmlFor={name} className="block text-sm font-medium text-gray-700">
                 {label}{isFieldRequired && <span className='text-red-600'>*</span>}
             </label>
             <input
