@@ -16,12 +16,8 @@ import {
   Package,
   Sprout
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 export default function CustomerCard({customer}) {
-    
-    const navigate = useNavigate();
-    const customerId = '64ab3c2f9d1e8f00123abcd4'
 
     const getStatusColor = (status) => {
     switch (status) {
@@ -32,7 +28,6 @@ export default function CustomerCard({customer}) {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
-
   
     // Sample customer data for demonstration
     const sampleCustomer = {
@@ -134,7 +129,7 @@ export default function CustomerCard({customer}) {
 
                 {/* Actions */}
                 <div className="flex space-x-3">
-                    <button onClick={() => navigate(`/customer-management/view-profile/${customerId}`)} className="flex-1 cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-1 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-md">
+                    <button className="flex-1 cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-1 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-md">
                         <Eye className="w-4 h-4" />
                         <span className="font-medium">View Profile</span>
                     </button>

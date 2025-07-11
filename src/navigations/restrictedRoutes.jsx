@@ -9,6 +9,7 @@ const ViewProducts = lazy(() => import("../features/products/pages/viewProducts"
 const EditProduct = lazy(() => import("../features/products/pages/editProduct"));
 // customer
 const CustomerManagement = lazy(() => import("../features/customer/pages/customer"));
+const CustomerViewProfile = lazy(() => import("../features/customer/pages/customerViewProfile"));
 
 // inventory
 const InventoryManagement = lazy(() => import("../features/inventoryManagement/pages/inventory"));
@@ -23,7 +24,8 @@ export const restrictedRoutes = [
     { path: ROUTES.EDIT_PRODUCT, element: <EditProduct /> },
 
     // customer
-    { path: ROUTES.CUSTOMER_PROFILE, element: <CustomerManagement /> },
+    { path: ROUTES.CUSTOMERS, element: <CustomerManagement /> },
+    { path: ROUTES.CUSTOMER_VIEW_PROFILE, element: <CustomerViewProfile /> },
 
     // inventory
     { path: ROUTES.INVENTORY_MANAGEMENT, element: <InventoryManagement /> },

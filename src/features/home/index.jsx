@@ -40,7 +40,7 @@ const AdminDashboard = () => {
 				{ label: 'Active Orders', value: 23, icon: ShoppingCart }
 			],
 			actions: ['View All Customers', 'Customer Analytics', 'Support Tickets'],
-            navigateTo: ROUTES.CUSTOMER_PROFILE
+            navigateTo: ROUTES.CUSTOMERS
 		},
 		{
 			id: 'inventory',

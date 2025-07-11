@@ -13,7 +13,8 @@ const ROUTES = {
     EDIT_PRODUCT: '/product-management/edit-product/:id',
 
     // CUSTOMER
-    CUSTOMER_PROFILE: '/customer-management/customer-profile',
+    CUSTOMERS: '/customer-management/customers',
+    CUSTOMER_VIEW_PROFILE: '/customer-management/view-profile/:customerId',
 
     // INVENTORY
     INVENTORY_MANAGEMENT: '/inventory-management',
