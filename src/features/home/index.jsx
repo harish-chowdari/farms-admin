@@ -1,19 +1,55 @@
-import React, { useState } from 'react';
-import { Users, Package, BarChart3, Warehouse, Plus, Eye, Edit, TrendingUp, ShoppingCart, UserCheck, AlertTriangle, Sprout, Search, Bell, User, ArrowRight, ExternalLink, Home } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Users, Package, BarChart3, TrendingUp, ShoppingCart, UserCheck, AlertTriangle, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+
+// Components
 import Header from '../../components/layout/Header';
+import PrimaryLoader from '../../components/loaders/PrimaryLoader';
+// api
+import { getOrderStatusCount, productsStats, userStats } from '../../services/api';
+import { to5SoldProducts } from './services/api';
+// navigations
 import ROUTES from '../../navigations/routes';
 
 const AdminDashboard = () => {
-	const [activeCard, setActiveCard] = useState(null);
     const navigate = useNavigate();
 
+	const [activeCard, setActiveCard] = useState(null);
+    const [productStats, setProductStats] = useState({});
+    const [customerStats, setCustomerStats] = useState({});
+    const [orderStatusStats, setOrderStatusStats] = useState([]);
+    const [top5SellingProducts, setTop5SellingProducts] = useState([]);
+
+    const [isLoading, setIsLoading] = useState(false);
+
 	const dashboardStats = {
-		totalCustomers: 1247,
-		totalProducts: 89,
-		lowStockItems: 12,
 		todaySales: 45230
 	};
+
+    useEffect(() => {
+        const getStats = async() => {
+            try {
+                setIsLoading(true);
+                const res = await productsStats()
+                setProductStats(res?.summary)
+
+                const userRes = await userStats()
+                setCustomerStats(userRes)
+                
+                const top5Res = await to5SoldProducts()
+                setTop5SellingProducts(top5Res)
+
+                const orderCount = await getOrderStatusCount()
+                console.log('orderCount', orderCount)
+                setOrderStatusStats(orderCount)
+            } catch (error) {
+                console.error('Error fetching products summary:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        getStats()
+    },[])
 
 	const cards = [
 		{
@@ -22,11 +58,10 @@ const AdminDashboard = () => {
 			icon: Package,
 			color: 'from-green-500 to-green-600',
 			stats: [
-				{ label: 'Total Products', value: dashboardStats.totalProducts, icon: Package },
-				{ label: 'Categories', value: 8, icon: BarChart3 },
-				{ label: 'Out of Stock', value: 5, icon: AlertTriangle }
+				{ label: 'Total Products', value: productStats?.totalProducts, icon: Package },
+				{ label: 'Categories', value: productStats?.totalCategories, icon: BarChart3 },
+				{ label: 'Out of Stock', value: productStats?.outOfStockCount, icon: AlertTriangle }
 			],
-			actions: ['Add New Product', 'Manage Categories', 'Bulk Import'],
             navigateTo: ROUTES.ADD_PRODUCT
 		},
 		{
@@ -35,25 +70,11 @@ const AdminDashboard = () => {
 			icon: Users,
 			color: 'from-blue-500 to-blue-600',
 			stats: [
-				{ label: 'Total Customers', value: dashboardStats.totalCustomers, icon: UserCheck },
-				{ label: 'New This Month', value: 156, icon: TrendingUp },
-				{ label: 'Active Orders', value: 23, icon: ShoppingCart }
+				{ label: 'Total Customers', value: customerStats?.totalUsers, icon: UserCheck },
+				{ label: 'New This Month', value: customerStats?.registeredThisMonth, icon: TrendingUp },
+				{ label: 'Blocked Customers', value: customerStats?.blockedUsers, icon: ShoppingCart }
 			],
-			actions: ['View All Customers', 'Customer Analytics', 'Support Tickets'],
             navigateTo: ROUTES.CUSTOMERS
-		},
-		{
-			id: 'inventory',
-			title: 'Inventory Management',
-			icon: Warehouse,
-			color: 'from-orange-500 to-orange-600',
-			stats: [
-				{ label: 'Total Stock Value', value: '₹2.4L', icon: BarChart3 },
-				{ label: 'Low Stock Alerts', value: dashboardStats.lowStockItems, icon: AlertTriangle },
-				{ label: 'Reorder Required', value: 8, icon: Package }
-			],
-			actions: ['Update Stock', 'Set Alerts', 'Supplier Management'],
-            navigateTo: ROUTES.INVENTORY_MANAGEMENT
 		},
 		{
 			id: 'dashboard',
@@ -65,15 +86,17 @@ const AdminDashboard = () => {
 				{ label: 'Monthly Revenue', value: '₹8.2L', icon: BarChart3 },
 				{ label: 'Growth Rate', value: '+12%', icon: TrendingUp }
 			],
-			actions: ['Sales Report', 'Customer Insights', 'Export Data'],
             navigateTo: ROUTES.DASHBOARD   
 		}
 	];
+
+    console.log(orderStatusStats)
 
 	return (
 		<div className="h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
 			{/* Header - Fixed at top */}
 			<Header />
+            <PrimaryLoader isLoading={isLoading} />
 
 			{/* Main Content Area - Scrollable */}
 			<div className="flex-1 overflow-y-auto">
@@ -84,7 +107,7 @@ const AdminDashboard = () => {
 							<div className="flex items-center justify-between">
 								<div>
 									<p className="text-sm text-gray-600 mb-1">Total Customers</p>
-									<p className="text-2xl font-bold text-gray-900">{dashboardStats.totalCustomers}</p>
+									<p className="text-2xl font-bold text-gray-900">{customerStats?.totalUsers}</p>
 								</div>
 								<div className="bg-blue-100 p-3 rounded-lg">
 									<Users className="w-6 h-6 text-blue-600" />
@@ -95,7 +118,7 @@ const AdminDashboard = () => {
 							<div className="flex items-center justify-between">
 								<div>
 									<p className="text-sm text-gray-600 mb-1">Products</p>
-									<p className="text-2xl font-bold text-gray-900">{dashboardStats.totalProducts}</p>
+									<p className="text-2xl font-bold text-gray-900">{productStats?.totalProducts}</p>
 								</div>
 								<div className="bg-green-100 p-3 rounded-lg">
 									<Package className="w-6 h-6 text-green-600" />
@@ -106,7 +129,7 @@ const AdminDashboard = () => {
 							<div className="flex items-center justify-between">
 								<div>
 									<p className="text-sm text-gray-600 mb-1">Low Stock</p>
-									<p className="text-2xl font-bold text-red-600">{dashboardStats.lowStockItems}</p>
+									<p className="text-2xl font-bold text-red-600">{productStats?.lowStockCount}</p>
 								</div>
 								<div className="bg-red-100 p-3 rounded-lg">
 									<AlertTriangle className="w-6 h-6 text-red-600" />
@@ -227,33 +250,22 @@ const AdminDashboard = () => {
 						<div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
 							<h3 className="text-lg font-semibold text-gray-900 mb-4">Top Selling Products</h3>
 							<div className="space-y-4">
-								{[
-									{ name: 'Organic Tomatoes', sales: 245 },
-									{ name: 'Fresh Spinach', sales: 189 },
-									{ name: 'Basmati Rice', sales: 167 },
-									{ name: 'Chicken Breast', sales: 145 },
-									{ name: 'Greek Yogurt', sales: 123 }
-								].map((product, index) => (
+								{top5SellingProducts?.slice(0, 5)?.map((product, index) => (
 									<div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
-										<span className="text-gray-700">{product.name}</span>
-										<span className="text-green-600 font-semibold">{product.sales} sold</span>
+										<span className="text-gray-700">{product?.productName}</span>
+										<span className="text-green-600 font-semibold">{product?.totalSold} sold</span>
 									</div>
 								))}
 							</div>
 						</div>
 						
 						<div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-							<h3 className="text-lg font-semibold text-gray-900 mb-4">Customer Regions</h3>
+							<h3 className="text-lg font-semibold text-gray-900 mb-4">Order Status</h3>
 							<div className="space-y-4">
-								{[
-									{ region: 'North Zone', customers: 456 },
-									{ region: 'South Zone', customers: 389 },
-									{ region: 'East Zone', customers: 234 },
-									{ region: 'West Zone', customers: 168 }
-								].map((region, index) => (
+								{orderStatusStats?.map((stat, index) => (
 									<div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
-										<span className="text-gray-700">{region.region}</span>
-										<span className="text-blue-600 font-semibold">{region.customers} customers</span>
+										<span className="text-gray-700">{stat?.status?.charAt(0).toUpperCase() + stat?.status?.slice(1)}</span>
+										<span className="text-blue-600 font-semibold">{stat?.count} Orders</span>
 									</div>
 								))}
 							</div>

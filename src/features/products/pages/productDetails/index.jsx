@@ -13,6 +13,7 @@ import PageLayout from '../../../../components/layout/PageLayout';
 import { sidebarHeading, sidebarItems } from '../../config/sidebar';
 import { useParams } from 'react-router-dom';
 import { getProductById } from '../../services/api';
+import PrimaryLoader from '../../../../components/loaders/PrimaryLoader';
 
 const ProductDetailsPage = () => {
 
@@ -20,13 +21,18 @@ const ProductDetailsPage = () => {
 
     const {productId} = useParams();
 
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
         const getProductDetails = async () => {
             try {
+                setIsLoading(true);
                 const response = await getProductById(productId);
                 setProductData(response);
             } catch (error) {
                 console.error('API Error:', error);
+            } finally {
+                setIsLoading(false);
             }
         }
 
@@ -55,6 +61,7 @@ const ProductDetailsPage = () => {
 
 	return (
 		<PageLayout sidebarHeading={sidebarHeading} sidebarItems={sidebarItems} pageHeading={"Product Details"}>
+            <PrimaryLoader isLoading={isLoading} message={"Loading Product Details..."} />
 			<div className="bg-white p-4">
 				{/* Header */}
 				<div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">

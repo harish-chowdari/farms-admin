@@ -10,6 +10,7 @@ import { sidebarHeading, sidebarItems } from "../../config/sidebar";
 import { getAllProductsPaginated } from "./services/api";
 import PrimaryLoader from "../../../../components/loaders/PrimaryLoader";
 import { categories, sortOptions } from "./utils/options";
+import { productsStats } from "../../../../services/api";
 
 const PAGE_SIZE = 12;
 
@@ -22,6 +23,7 @@ export default function index() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [sortOrder, setSortOrder] = useState('desc');
+    const [productStats, setProductStats] = useState({});
     
 
     // Formik for form handling
@@ -75,12 +77,26 @@ export default function index() {
         }
     };
 
-    // Fetch products when dependencies change
+    const getProductsSummary = async() => {
+        try {
+            setIsLoading(true);
+            const res = await productsStats()
+            setProductStats(res?.summary)
+        } catch (error) {
+            console.error('Error fetching products summary:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getProductsSummary()
+    }, [])
+
     useEffect(() => {
         fetchProducts(currentPage);
     }, [currentPage]);
 
-    // Reset to first page when category or sortBy changes
     useEffect(() => {
         if (currentPage === 1) {
             fetchProducts(1);
@@ -123,7 +139,7 @@ export default function index() {
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm text-gray-600">Total Products</p>
-                                    <p className="text-2xl font-bold text-gray-900">{statsData.totalProducts}</p>
+                                    <p className="text-2xl font-bold text-gray-900">{productStats?.totalProducts}</p>
                                 </div>
                                 <div className="bg-blue-50 p-3 rounded-lg">
                                     <Package className="text-blue-600" size={24} />
@@ -134,7 +150,7 @@ export default function index() {
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm text-gray-600">Low Stock</p>
-                                    <p className="text-2xl font-bold text-orange-600">{statsData.lowStock}</p>
+                                    <p className="text-2xl font-bold text-orange-600">{productStats?.lowStockCount}</p>
                                 </div>
                                 <div className="bg-orange-50 p-3 rounded-lg">
                                     <AlertCircle className="text-orange-600" size={24} />
@@ -145,7 +161,7 @@ export default function index() {
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm text-gray-600">Expiring Soon</p>
-                                    <p className="text-2xl font-bold text-red-600">{statsData.expiringSoon}</p>
+                                    <p className="text-2xl font-bold text-red-600">{productStats?.expiringSoonCount}</p>
                                 </div>
                                 <div className="bg-red-50 p-3 rounded-lg">
                                     <Calendar className="text-red-600" size={24} />
@@ -157,7 +173,7 @@ export default function index() {
                                 <div>
                                     <p className="text-sm text-gray-600">Total Value</p>
                                     <p className="text-2xl font-bold text-green-600">
-                                        ${statsData.totalValue.toFixed(2)}
+                                        ${productStats?.totalValue?.toFixed(2)}
                                     </p>
                                 </div>
                                 <div className="bg-green-50 p-3 rounded-lg">
