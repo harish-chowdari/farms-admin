@@ -7,6 +7,7 @@ const Home = lazy(() => import("../features/home"));
 const AddProduct = lazy(() => import("../features/products/pages/addProduct"));
 const ViewProducts = lazy(() => import("../features/products/pages/viewProducts"));
 const EditProduct = lazy(() => import("../features/products/pages/editProduct"));
+const ProductDetails = lazy(() => import("../features/products/pages/productDetails"));
 // customer
 const CustomerManagement = lazy(() => import("../features/customer/pages/customer"));
 const CustomerViewProfile = lazy(() => import("../features/customer/pages/customerViewProfile"));
@@ -19,9 +20,12 @@ const Dashboard = lazy(() => import("../features/dashboard/pages/analytics"));
 
 export const restrictedRoutes = [
     { path: ROUTES.HOME, element: <Home /> },
+
+    // product
     { path: ROUTES.ADD_PRODUCT, element: <AddProduct /> },
     { path: ROUTES.VIEW_PRODUCTS, element: <ViewProducts /> },
     { path: ROUTES.EDIT_PRODUCT, element: <EditProduct /> },
+    { path: ROUTES.PRODUCT_DETAILS, element: <ProductDetails /> },
 
     // customer
     { path: ROUTES.CUSTOMERS, element: <CustomerManagement /> },

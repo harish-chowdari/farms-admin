@@ -11,11 +11,12 @@ import PrimaryButton from '../../../../components/buttons/PrimaryButton';
 // utils
 import { sidebarHeading, sidebarItems } from '../../config/sidebar';
 // services
-import { getProductById, updateProduct } from './services/api';
+import { updateProduct } from './services/api';
 import PrimaryLoader from '../../../../components/loaders/PrimaryLoader';
 import { useParams } from 'react-router-dom';
 import initialValues from './utils/initialValues';
 import { validationSchema } from './utils/validationSchema';
+import { getProductById } from '../../services/api';
 
 
 export default function index() {

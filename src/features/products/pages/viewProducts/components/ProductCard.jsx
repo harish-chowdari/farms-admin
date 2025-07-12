@@ -98,7 +98,7 @@ export default function ProductCard({ product }) {
 				</div>
 
 				<div className="flex gap-2">
-					<button className="flex-1 cursor-pointer bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2">
+					<button onClick={() => navigate(`/product-management/product-details/${product._id}`)} className="flex-1 cursor-pointer bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2">
 						<Eye size={16} />
 						View
 					</button>
