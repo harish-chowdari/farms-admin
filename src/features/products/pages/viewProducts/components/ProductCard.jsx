@@ -38,7 +38,7 @@ export default function ProductCard({ product }) {
 				<img 
 					src={product?.productImage[0]} 
 					alt={product?.productName}
-					className="w-full h-48 object-cover"
+					className="w-full h-48 object-contain"
 				/>
 				{discountPercentage > 0 && (
 					<div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
@@ -58,7 +58,7 @@ export default function ProductCard({ product }) {
 				</div>
 			</div>
 			
-			<div className="p-5">
+			<div className="p-5 border-t border-t-gray-300">
 				<div className="flex justify-between items-start mb-3">
 					<h3 className="text-lg font-semibold text-gray-900 capitalize">{product.productName}</h3>
 					<div className="text-right">
