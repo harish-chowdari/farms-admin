@@ -4,4 +4,8 @@ export default defineConfig({
     plugins: [
         tailwindcss(),
     ],
+    server: {
+        port:3001,
+        hmr: false
+    }
 })
