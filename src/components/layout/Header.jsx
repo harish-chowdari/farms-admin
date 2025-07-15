@@ -1,6 +1,7 @@
 import { Bell, Search, Sprout, User, Wifi, WifiOff } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { logo } from '../../assets'
 
 export default function Header() {
     const [isOnline, setIsOnline] = useState(navigator.onLine)
@@ -24,9 +25,7 @@ export default function Header() {
             <div className="flex items-center justify-between px-4 py-3">
                 <div className="flex items-center space-x-4">
                     <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
-                            <Sprout className="w-5 h-5 text-white" />
-                        </div>
+                        <img className='w-8 h-8' src={logo} alt='logo' />
                         <div onClick={() => navigate('/')} className='cursor-pointer'>
                             <h1 className="text-lg font-bold text-green-800">Sunotal Farms</h1>
                             <p className="text-xs text-green-600">Lead Tomorrow's Agriculture</p>
