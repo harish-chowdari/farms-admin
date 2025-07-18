@@ -2,7 +2,7 @@ import axiosInstance from "../../../../../services/axios"
 
 export async function addProduct(data) {
     const response = await axiosInstance.post(
-        `/products/add-product`,
+        `/api/products/add-product`,
         data,
         {
         headers: {

@@ -2,7 +2,7 @@ import axiosInstance from "./axios";
 
 async function productsStats() {
     try {
-        const response = await axiosInstance.get(`/products/products-stats`);
+        const response = await axiosInstance.get(`/api/products/products-stats`);
         return response?.data;
     } catch (error) {
         console.error('API error:', error);
@@ -12,7 +12,7 @@ async function productsStats() {
 
 async function userStats() {
     try {
-        const response = await axiosInstance.get(`/auth/get-user-stats`);
+        const response = await axiosInstance.get(`/api/auth/get-user-stats`);
         return response?.data;
     } catch (error) {
         console.error('API error:', error);
@@ -22,7 +22,7 @@ async function userStats() {
 
 async function getOrderStatusCount() {
     try {
-        const response = await axiosInstance.get(`/orders/dashboard/get-order-status-counts`);
+        const response = await axiosInstance.get(`/api/orders/dashboard/get-order-status-counts`);
         return response?.data;
     } catch (error) {
         console.error('API error:', error);

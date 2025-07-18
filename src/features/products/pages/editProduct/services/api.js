@@ -2,7 +2,7 @@ import axiosInstance from "../../../../../services/axios"
 
 export async function updateProduct(productId, data) {
    try {
-        const response = await axiosInstance.put(`/products/update-product/${productId}`,
+        const response = await axiosInstance.put(`/api/products/update-product/${productId}`,
             data,
             {
                 headers: {

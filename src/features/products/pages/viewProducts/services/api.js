@@ -17,7 +17,7 @@ async function getAllProductsPaginated(page, limit, filters) {
         if (sortBy) params.sortBy = sortBy;
         if (sortOrder) params.sortOrder = sortOrder;
         
-        const response = await axiosInstance.get('/products/get-products/paginated', {
+        const response = await axiosInstance.get('/api/products/get-products/paginated', {
             params
         });
         
