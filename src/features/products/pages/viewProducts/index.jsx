@@ -173,7 +173,7 @@ export default function index() {
                                 <div>
                                     <p className="text-sm text-gray-600">Total Value</p>
                                     <p className="text-2xl font-bold text-green-600">
-                                        ${productStats?.totalValue?.toFixed(2)}
+                                        ₹{productStats?.totalValue?.toFixed(2)}
                                     </p>
                                 </div>
                                 <div className="bg-green-50 p-3 rounded-lg">

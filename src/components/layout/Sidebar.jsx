@@ -100,7 +100,7 @@ export default function Sidebar({ isOpen, sidebarItems = [], sidebarHeading = "D
                                 onMouseEnter={() => setHoveredItem(item.id)}
                                 onMouseLeave={() => setHoveredItem(null)}
                                 className={`
-                                    w-full flex items-center rounded-2xl transition-all duration-300 relative group overflow-hidden
+                                    w-full flex text-nowrap items-center rounded-2xl transition-all duration-300 relative group overflow-hidden
                                     ${isOpen ? 'space-x-4 px-4 py-2' : 'justify-center p-3.5'}
                                     ${isActive 
                                         ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md shadow-green-500/30 transform' 

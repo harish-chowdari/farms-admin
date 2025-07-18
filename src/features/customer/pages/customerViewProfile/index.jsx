@@ -19,182 +19,35 @@ import {
 import { useParams } from 'react-router-dom';
 
 import PageLayout from '../../../../components/layout/PageLayout';
+import PrimaryLoader from '../../../../components/loaders/PrimaryLoader';
+
+import { getCustomerOrders } from './services/api';
+import { ORDER_STATUS } from '../../../../config/constants';
 import { sidebarHeading, sidebarItems } from '../../config/sidebar';
 
-// Mock data based on your JSON structure
-const mockCustomerData = {
-  _id: "64ab3c2f9d1e8f00123abcd4",
-  name: "John Smith",
-  email: "john.smith@email.com",
-  phone: "+1 (555) 123-4567",
-  avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-  joinDate: "2024-01-15",
-  totalOrders: 5,
-  totalSpent: 625,
-  status: "Premium Customer",
-  lastOrderDate: "2025-07-10"
-};
-
-const mockOrders = [
-  {
-    "shippingAddress": {
-      "address": "123 Green Farm Road",
-      "city": "Greenville",
-      "state": "Farmington",
-      "postalCode": "123456",
-      "country": "Wonderland"
-    },
-    "_id": "686e689fcf5cf5f7b860acaa",
-    "userId": "64ab3c2f9d1e8f00123abcd4",
-    "orderItems": [
-      {
-        "productId": "64ab3c3e9d1e8f00123abcd5",
-        "productName": "Fresh Tomatoes (1kg)",
-        "productImage": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=100&h=100&fit=crop",
-        "price": 40,
-        "discountPrice": 5,
-        "weight": 1,
-        "weightUnit": "kg",
-        "quantity": 2,
-        "_id": "686e689fcf5cf5f7b860acab"
-      },
-      {
-        "productId": "64ab3c4b9d1e8f00123abcd6",
-        "productName": "Organic Spinach (500g)",
-        "productImage": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=100&h=100&fit=crop",
-        "price": 30,
-        "discountPrice": 0,
-        "weight": 500,
-        "weightUnit": "g",
-        "quantity": 1,
-        "_id": "686e689fcf5cf5f7b860acac"
-      }
-    ],
-    "paymentMethod": "Credit Card",
-    "shippingPrice": 20,
-    "totalPrice": 125,
-    "isPaid": true,
-    "paidAt": "2025-07-09T09:15:00.000Z",
-    "isDelivered": false,
-    "deliveredAt": null,
-    "createdAt": "2025-07-09T13:03:27.257Z",
-    "updatedAt": "2025-07-10T07:54:40.805Z",
-    "__v": 0,
-    "orderStatus": "accepted"
-  },
-  {
-    "shippingAddress": {
-      "address": "123 Green Farm Road",
-      "city": "Greenville",
-      "state": "Farmington",
-      "postalCode": "123456",
-      "country": "Wonderland"
-    },
-    "orderStatus": "placed",
-    "_id": "686e68abcf5cf5f7b860acae",
-    "userId": "64ab3c2f9d1e8f00123abcd4",
-    "orderItems": [
-      {
-        "productId": "64ab3c3e9d1e8f00123abcd5",
-        "productName": "Fresh Carrot",
-        "productImage": "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=100&h=100&fit=crop",
-        "price": 40,
-        "discountPrice": 5,
-        "weight": 1,
-        "weightUnit": "kg",
-        "quantity": 2,
-        "_id": "686e68abcf5cf5f7b860acaf"
-      },
-      {
-        "productId": "64ab3c4b9d1e8f00123abcd6",
-        "productName": "Organic Spinach (500g)",
-        "productImage": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=100&h=100&fit=crop",
-        "price": 30,
-        "discountPrice": 0,
-        "weight": 500,
-        "weightUnit": "g",
-        "quantity": 1,
-        "_id": "686e68abcf5cf5f7b860acb0"
-      }
-    ],
-    "paymentMethod": "Credit Card",
-    "shippingPrice": 20,
-    "totalPrice": 125,
-    "isPaid": true,
-    "paidAt": "2025-07-09T09:15:00.000Z",
-    "isDelivered": false,
-    "deliveredAt": null,
-    "createdAt": "2025-07-09T13:03:39.751Z",
-    "updatedAt": "2025-07-09T13:03:39.751Z",
-    "__v": 0
-  },
-  {
-    "shippingAddress": {
-      "address": "123 Green Farm Road",
-      "city": "Greenville",
-      "state": "Farmington",
-      "postalCode": "123456",
-      "country": "Wonderland"
-    },
-    "_id": "686e68b4cf5cf5f7b860acb2",
-    "userId": "64ab3c2f9d1e8f00123abcd4",
-    "orderItems": [
-      {
-        "productId": "64ab3c3e9d1e8f00123abcd5",
-        "productName": "Fresh Potato",
-        "productImage": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=100&h=100&fit=crop",
-        "price": 40,
-        "discountPrice": 5,
-        "weight": 1,
-        "weightUnit": "kg",
-        "quantity": 2,
-        "_id": "686e68b4cf5cf5f7b860acb3"
-      },
-      {
-        "productId": "64ab3c4b9d1e8f00123abcd6",
-        "productName": "Organic Spinach (500g)",
-        "productImage": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=100&h=100&fit=crop",
-        "price": 30,
-        "discountPrice": 0,
-        "weight": 500,
-        "weightUnit": "g",
-        "quantity": 1,
-        "_id": "686e68b4cf5cf5f7b860acb4"
-      }
-    ],
-    "paymentMethod": "Credit Card",
-    "shippingPrice": 20,
-    "totalPrice": 125,
-    "isPaid": true,
-    "paidAt": "2025-07-09T09:15:00.000Z",
-    "isDelivered": true,
-    "deliveredAt": "2025-07-10T07:55:15.263Z",
-    "createdAt": "2025-07-09T13:03:48.085Z",
-    "updatedAt": "2025-07-10T07:55:15.263Z",
-    "__v": 0,
-    "orderStatus": "delivered"
-  }
-];
 
 export default function CustomerProfile() {
 
     const { customerId } = useParams();
-    const [customer, setCustomer] = useState(mockCustomerData);
+    const [customer, setCustomer] = useState({});
     const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('overview');
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchCustomerData = async () => {
-        try {
-            // Replace with actual API call
-            // const response = await getCustomerOrders(customerId);
-            setOrders(mockOrders);
-            setLoading(false);
-        } catch (error) {
-            console.error('API error:', error);
-            setLoading(false);
-        }
+            try {
+                setIsLoading(true);
+                const response = await getCustomerOrders(customerId);
+                setOrders(response?.orders);
+                setCustomer(response?.summary);
+                console.log('Orders:', response);
+            } catch (error) {
+                console.error('API error:', error);
+                setIsLoading(false);
+            } finally {
+                setIsLoading(false);
+            }
         };
         fetchCustomerData();
     }, [customerId]);
@@ -210,9 +63,9 @@ export default function CustomerProfile() {
 
     const getStatusIcon = (status) => {
         switch (status) {
-        case 'delivered': return <CheckCircle className="w-4 h-4" />;
-        case 'accepted': return <Truck className="w-4 h-4" />;
-        case 'placed': return <Clock className="w-4 h-4" />;
+        case ORDER_STATUS.DELIVERED: return <CheckCircle className="w-4 h-4" />;
+        case ORDER_STATUS.ACCEPTED: return <Truck className="w-4 h-4" />;
+        case ORDER_STATUS.PLACED: return <Clock className="w-4 h-4" />;
         default: return <Package className="w-4 h-4" />;
         }
     };
@@ -226,29 +79,19 @@ export default function CustomerProfile() {
     };
 
     const stats = [
-        { label: 'Total Orders', value: orders.length, icon: ShoppingBag, color: 'bg-blue-500' },
-        { label: 'Total Spent', value: `$${orders.reduce((sum, order) => sum + order.totalPrice, 0)}`, icon: DollarSign, color: 'bg-green-500' },
-        { label: 'Avg Order Value', value: `$${orders.length ? (orders.reduce((sum, order) => sum + order.totalPrice, 0) / orders.length).toFixed(2) : 0}`, icon: TrendingUp, color: 'bg-purple-500' },
-        { label: 'Customer Since', value: formatDate(customer.joinDate), icon: Calendar, color: 'bg-orange-500' }
+        { label: 'Total Orders', value: customer?.totalOrders, icon: ShoppingBag, color: 'bg-blue-500' },
+        { label: 'Total Spent', value: customer?.totalSpent, icon: DollarSign, color: 'bg-green-500' },
+        { label: 'Avg Order Value', value: `₹${orders.length ? (orders?.reduce((sum, order) => sum + order?.totalPrice, 0) / orders?.length)?.toFixed(2) : 0}`, icon: TrendingUp, color: 'bg-purple-500' },
+        { label: 'Customer Since', value: customer?.joinedOn ? formatDate(customer?.joinedOn) : 'N/A', icon: Calendar, color: 'bg-orange-500' }
     ];
 
-    if (loading) {
-        return (
-        <div className="p-6 bg-gray-50 min-h-screen">
-            <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            </div>
-        </div>
-        );
-    }
-
     return (
-        <PageLayout sidebarHeading={sidebarHeading} sidebarItems={sidebarItems} pageHeading={'Customer Data'}>
+        <PageLayout sidebarHeading={sidebarHeading} sidebarItems={sidebarItems} pageHeading={'Customer Profile'}>
+        <PrimaryLoader isLoading={isLoading} />
 
         <div className="p-4 bg-white min-h-screen">
         {/* Header */}
-        <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Customer Profile</h1>
+        <div className="md:mb-6 mb-3">
             <p className="text-gray-600">Complete overview of customer data and order history</p>
         </div>
 
@@ -257,8 +100,8 @@ export default function CustomerProfile() {
             <div className="flex items-start space-x-6">
             <div className="relative">
                 <img 
-                src={customer.avatar} 
-                alt={customer.name}
+                src={'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'} 
+                alt={customer.userName}
                 className="w-24 h-24 rounded-2xl object-cover"
                 />
                 <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center">
@@ -268,7 +111,7 @@ export default function CustomerProfile() {
             
             <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-2">
-                <h2 className="text-2xl font-bold text-gray-900">{customer.name}</h2>
+                <h2 className="text-2xl font-bold text-gray-900">{customer?.userName}</h2>
                 <span className="px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-medium rounded-full flex items-center space-x-1">
                     <Award className="w-3 h-3" />
                     <span>{customer.status}</span>
@@ -276,17 +119,17 @@ export default function CustomerProfile() {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div className="flex items-center space-x-2 text-gray-600">
+                {customer?.email && <div className="flex items-center space-x-2 text-gray-600">
                     <Mail className="w-4 h-4" />
-                    <span className="text-sm">{customer.email}</span>
-                </div>
+                    <span className="text-sm">{customer?.email}</span>
+                </div>}
                 <div className="flex items-center space-x-2 text-gray-600">
                     <Phone className="w-4 h-4" />
-                    <span className="text-sm">{customer.phone}</span>
+                    <span className="text-sm">{customer?.phoneNo}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-gray-600">
                     <MapPin className="w-4 h-4" />
-                    <span className="text-sm">Greenville, Farmington</span>
+                    <span className="text-sm">Enikepadu, Vijayawada</span>
                 </div>
                 </div>
             </div>
@@ -319,7 +162,7 @@ export default function CustomerProfile() {
                     className={`py-4 px-2 border-b-2 font-medium text-sm capitalize transition-colors ${
                     activeTab === tab
                         ? 'border-blue-500 text-blue-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                        : 'border-transparent cursor-pointer text-gray-500 hover:text-gray-700'
                     }`}
                 >
                     {tab}
@@ -385,8 +228,8 @@ export default function CustomerProfile() {
                         </div>
                         <div className="flex items-center space-x-3">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium border flex items-center space-x-1 ${getStatusColor(order.orderStatus)}`}>
-                            {getStatusIcon(order.orderStatus)}
-                            <span className="capitalize">{order.orderStatus}</span>
+                            {getStatusIcon(order?.orderStatus)}
+                            <span className="capitalize">{order?.orderStatus}</span>
                         </span>
                         <span className="text-sm text-gray-500">{formatDate(order.createdAt)}</span>
                         </div>
@@ -401,14 +244,14 @@ export default function CustomerProfile() {
                                 <img 
                                 src={item.productImage} 
                                 alt={item.productName}
-                                className="w-12 h-12 rounded-lg object-cover"
+                                className="w-12 h-12 border border-gray-300 rounded-lg object-cover"
                                 />
                                 <div className="flex-1">
                                 <h5 className="font-medium text-gray-900 text-sm">{item.productName}</h5>
                                 <p className="text-xs text-gray-500">
-                                    Qty: {item.quantity} × ${item.price} 
+                                    Qty: {item.quantity} × <span className='line-through'>₹{item.price}</span> 
                                     {item.discountPrice > 0 && (
-                                    <span className="text-green-600 ml-2">(-${item.discountPrice})</span>
+                                    <span className="text-green-600 ml-2">₹{item.discountPrice}</span>
                                     )}
                                 </p>
                                 </div>
@@ -422,15 +265,15 @@ export default function CustomerProfile() {
                         <div className="space-y-2 text-sm">
                             <div className="flex justify-between">
                             <span className="text-gray-600">Subtotal:</span>
-                            <span className="text-gray-900">${order.totalPrice - order.shippingPrice}</span>
+                            <span className="text-gray-900">₹{order.totalPrice - order.shippingPrice}</span>
                             </div>
                             <div className="flex justify-between">
                             <span className="text-gray-600">Shipping:</span>
-                            <span className="text-gray-900">${order.shippingPrice}</span>
+                            <span className="text-gray-900">₹{order.shippingPrice}</span>
                             </div>
                             <div className="flex justify-between font-medium text-base border-t pt-2">
                             <span>Total:</span>
-                            <span>${order.totalPrice}</span>
+                            <span>₹{order.totalPrice}</span>
                             </div>
                             <div className="flex items-center space-x-2 mt-3">
                             <CreditCard className="w-4 h-4 text-gray-400" />

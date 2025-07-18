@@ -63,9 +63,9 @@ export default function ProductCard({ product }) {
 					<h3 className="text-lg font-semibold text-gray-900 capitalize">{product.productName}</h3>
 					<div className="text-right">
 						<div className="flex items-center gap-2">
-							<span className="text-lg font-bold text-gray-900">${product.discountPrice}</span>
+							<span className="text-lg font-bold text-gray-900">₹{product.discountPrice}</span>
 							{product.price !== product.discountPrice && (
-								<span className="text-sm text-gray-500 line-through">${product.price}</span>
+								<span className="text-sm text-gray-500 line-through">₹{product.price}</span>
 							)}
 						</div>
 						<div className="text-xs text-gray-500">{product.weight} {product.weightUnit}</div>

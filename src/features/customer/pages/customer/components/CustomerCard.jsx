@@ -19,6 +19,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 export default function CustomerCard({customer}) {
+
+    console.log('customer', customer)
     
     const navigate = useNavigate();
     const customerId = '64ab3c2f9d1e8f00123abcd4'
@@ -33,25 +35,7 @@ export default function CustomerCard({customer}) {
     }
   };
 
-  
-    // Sample customer data for demonstration
-    const sampleCustomer = {
-        name: "Sarah Johnson",
-        avatar: "SJ",
-        status: "premium",
-        email: "sarah.johnson@email.com",
-        phone: "+1 (555) 123-4567",
-        location: "New York, NY",
-        totalOrders: 24,
-        totalSpent: "$2,450",
-        rating: 4.8,
-        orderFrequency: "Weekly",
-        lastOrder: "2 days ago",
-        joinDate: "Jan 2023"
-    };
 
-    const displayCustomer = customer || sampleCustomer;
-  
     return (
         <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 overflow-hidden group">
             <div className="p-4">
@@ -59,14 +43,14 @@ export default function CustomerCard({customer}) {
                 <div className="flex items-start justify-between mb-5">
                     <div className="flex items-center space-x-3">
                         <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-base shadow-md">
-                        {displayCustomer.avatar}
+                            {customer?.avatar ? customer.avatar : customer.userName.charAt(0).toUpperCase() + customer.userName.charAt(1).toUpperCase()}
                         </div>
                         <div>
                         <h3 className="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
-                            {displayCustomer.name}
+                            {customer?.userName}
                         </h3>
-                        {/* <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(displayCustomer.status)} mt-1`}>
-                            {displayCustomer.status.toUpperCase()}
+                        {/* <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(customer.status)} mt-1`}>
+                            {customer.status.toUpperCase()}
                         </span> */}
                         </div>
                     </div>
@@ -81,15 +65,15 @@ export default function CustomerCard({customer}) {
                 <div className="space-y-3 mb-5">
                     <div className="flex items-center space-x-3 text-gray-600">
                         <Mail className="w-4 h-4 text-blue-500" />
-                        <span className="text-sm">{displayCustomer.email}</span>
+                        <span className="text-sm">{customer?.email ? customer.email : 'N/A'}</span>
                     </div>
                     <div className="flex items-center space-x-3 text-gray-600">
                         <Phone className="w-4 h-4 text-green-500" />
-                        <span className="text-sm">{displayCustomer.phone}</span>
+                        <span className="text-sm">{customer?.phoneNo ? customer.phoneNo : 'N/A'}</span>
                     </div>
                     <div className="flex items-center space-x-3 text-gray-600">
                         <MapPin className="w-4 h-4 text-red-500" />
-                        <span className="text-sm">{displayCustomer.location}</span>
+                        <span className="text-sm">{customer?.location ? customer.location : 'N/A'}</span>
                     </div>
                 </div>
 
@@ -100,7 +84,7 @@ export default function CustomerCard({customer}) {
                             <ShoppingBag className="w-5 h-5 text-blue-600" />
                             <div>
                                 <p className="text-xs text-blue-600 font-medium">Total Orders</p>
-                                <p className="text-lg font-bold text-blue-800">{displayCustomer.totalOrders}</p>
+                                <p className="text-lg font-bold text-blue-800">{customer?.totalOrders}</p>
                             </div>
                         </div>
                     </div>
@@ -109,7 +93,7 @@ export default function CustomerCard({customer}) {
                             <Package className="w-5 h-5 text-green-600" />
                             <div>
                                 <p className="text-xs text-green-600 font-medium">Total Spent</p>
-                                <p className="text-lg font-bold text-green-800">{displayCustomer.totalSpent}</p>
+                                <p className="text-lg font-bold text-green-800">{customer?.totalSpent}</p>
                             </div>
                         </div>
                     </div>
@@ -117,24 +101,24 @@ export default function CustomerCard({customer}) {
 
                 {/* Rating and Frequency */}
                 <div className="flex items-center justify-between mb-5">
-                    <div className="flex items-center space-x-1">
+                    {/* <div className="flex items-center space-x-1">
                         <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                        <span className="text-sm font-medium text-gray-700">{displayCustomer.rating}</span>
-                    </div>
+                        <span className="text-sm font-medium text-gray-700">{5}</span>
+                    </div> */}
                     <div className="text-sm text-gray-600 font-medium">
-                        Orders: {displayCustomer.orderFrequency}
+                        Orders: {customer?.orderFrequency}
                     </div>
                 </div>
 
                 {/* Dates */}
                 <div className="flex justify-between text-xs text-gray-500 mb-5">
-                    <span>Last Order: {displayCustomer.lastOrder}</span>
-                    <span>Joined: {displayCustomer.joinDate}</span>
+                    <span>Last Order: {customer?.lastOrderDate ? customer?.lastOrderDate?.split('T')[0] : 'Never'}</span>
+                    <span>Joined: {customer?.joinedDate ? customer?.joinedDate?.split('T')[0] : '-'}</span>
                 </div>
 
                 {/* Actions */}
                 <div className="flex space-x-3">
-                    <button onClick={() => navigate(`/customer-management/view-profile/${customerId}`)} className="flex-1 cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-1 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-md">
+                    <button onClick={() => navigate(`/customer-management/view-profile/${customer?.userId}`)} className="flex-1 cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-1 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-md">
                         <Eye className="w-4 h-4" />
                         <span className="font-medium">View Profile</span>
                     </button>

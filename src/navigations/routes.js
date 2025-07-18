@@ -12,6 +12,7 @@ const ROUTES = {
     VIEW_PRODUCTS: '/product-management/view-products',
     EDIT_PRODUCT: '/product-management/edit-product/:id',
     PRODUCT_DETAILS: '/product-management/product-details/:productId',
+    ORDERS: '/product-management/orders',
 
     // CUSTOMER
     CUSTOMERS: '/customer-management/customers',
